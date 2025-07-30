@@ -1,0 +1,27 @@
+LINK: https://www.youtube.com/watch?v=ufdHsFClAk0
+# -----------------------------------------------------
+$ touch index.js : Create a root program file for javascript.
+
+$ npm init -y   : Initialise the nodejs environment for application.
+                + This will also create the package.json file
+
+
+$ npm install pg : Installs the postgres package for server.
+
+$ node index.js  : Execute the program
+$ npm test       +-- Alternatively, but first modify the package.json
+                 +-- by replacing the line within script dictionary with the
+                 +-- following;
+                 +-- "test": "node index.js"
+$ npm run test   +-- Same as the prev command above.
+
+
+
+/* unusede */ 
+$ npm install express   : This package (library) allows for easy build
+                        + of servers and api in javascript by simply
+                        + creating a server instance when called during
+                        + import or inclusion into project.
+
+$ nodemon ./server.js   : Navigate to directory that contains the server.js
+                        + file and execute the command to start the server.
