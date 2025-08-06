@@ -1,13 +1,14 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int XPARSER__StripLeadingWhiteSpace( char *strInput, char **strOutput);
 int XPARSER__StripTrailingWhiteSpace( char *strInput, char **strOutput);
 int XPARSER__StripWhiteSpace( char *strInput, char **strOutput);
 int XPARSER__IsWhiteSpaceInStr( char *str);
-int handleOpt( char *strOpt);
-int processOptionChar( char *pChr);
+int handleOpt(char *strOpt, char *argv[], int *pArgIdx);
+int processOptionChar( char *pChr, char *argv[], int *pArgIdx);
 
 int main(int argc, char *argv[])
 {
@@ -33,13 +34,13 @@ int main(int argc, char *argv[])
             /* Check type of argument (option or ip addres ) */
             if ( str[0] == '-')
             {
-                printf("opt: \n");
-                retCode = handleOpt(str);
+                printf("==> opt: \n");
+                retCode = handleOpt(str, argv, &argIdx);
             }
             else
             {
                 /* process ip address */
-                printf("adr: \n");
+                printf("==> adr: \n");
             }
 
             /* Evaluate return Code */
@@ -121,7 +122,7 @@ int XPARSER__IsWhiteSpaceInStr(char *str)
 
 
 
-int handleOpt(char *strOpt)
+int handleOpt(char *strOpt, char *argv[], int *pArgIdx)
 {
     int retCode = 0;
 
@@ -141,7 +142,7 @@ int handleOpt(char *strOpt)
         {
             break ;
         }
-        retCode = processOptionChar( strOpt );
+        retCode = processOptionChar( strOpt, argv, pArgIdx);
     } while ( retCode == 0);
 
 labelExit:
@@ -151,10 +152,11 @@ labelExit:
 
 
 
-int processOptionChar( char *pChr )
+int processOptionChar( char *pChr, char *argv[], int *pArgIdx)
 {
-    int retCode = 0;
+    int  retCode = 0;
     char chr = *pChr;
+    int  cntValue = 0;
 
     switch (chr)
     {
@@ -176,22 +178,39 @@ int processOptionChar( char *pChr )
                 {
                     printf("Invalid option format for (c)\n");
                     retCode = -502;
+                    goto labelExit;
                 }
-                else
+                /* increment argument index to where count value is expected */ 
+                *pArgIdx += 1;
+                if ( argv[ (*pArgIdx) ] == NULL )
                 {
-                    printf("Retrieve count value from next argv[ idx ]\n");
-                    printf("update the count value variable\n");
-                    retCode = 0;
+                    printf("Missing value for option (c)\n");
+                    retCode = -503;
+                    goto labelExit;
                 }
+                printf("Retrieve count value string from next argv[ idx ] and conv to int\n");
+                cntValue = atoi( argv[ *pArgIdx ] );
+
+                printf("Count value: (%d)\n", cntValue);
+                if (cntValue == 0)
+                {
+                    printf("Invalid count value for option (c)\n");
+                    retCode = -504;
+                    goto labelExit;
+                }
+
+                printf("update the count value variable in app instance\n");
+                retCode = 0;
                 break ;
             }
         default:
             {
                 printf("Unknown option\n");
-                retCode = 503;
+                retCode = 506;
                 break ;
             }
     }
+labelExit:
     return (retCode);
 }
 
