@@ -4,11 +4,11 @@ const { Client } = require('pg')
 
 /* Create a new instance of the client from the import class Client */
 const  client = new Client({
-    user : "baecat_admink",
-    password : "$K3j%Bfn7wT(b",
-    host: "5.161.73.85",
-    port: 5432,
-    database: "baecat_db",
+    user : "",
+    password : "",
+    host: "",
+    port: 0,
+    database: "",
 });
 
 /*>
