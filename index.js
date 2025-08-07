@@ -4,11 +4,11 @@ const { Client } = require('pg')
 
 /* Create a new instance of the client from the import class Client */
 const  client = new Client({
-    user : "",
-    password : "",
-    host: "",
-    port: 0,
-    database: "",
+    user : "baecat_admink",
+    password : "$K3j%Bfn7wT(b",
+    host: "5.161.73.85",
+    port: 5432,
+    database: "baecat_db",
 });
 
 /*>
@@ -30,7 +30,16 @@ const  client = new Client({
  * but this approach is prone to sql injection by hackers.
  * command to fetch query :  .then( ()=> client.query(queryTxt, ["1"]))
  * --*/
-const queryTxt = "select * from public.baecat_baecatuser where id = $1";
+//const queryTxt = "select * from public.baecat_baecatuser where id = $1";
+const queryTxt = "insert into public.baecat_baecatuser(bio, birth_date, sex, \
+                                                              thumbnail_image_path, \
+                                                              stream_key, \
+                                                              live_at_tmz, \
+                                                              country_name, \
+                                                              tokens, \
+                                                              current_amount_of_views, \
+                                                              is_streaming, \
+                                                              user_id) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)";
 
 
 /*>
@@ -61,13 +70,18 @@ async function PG_Query(qTxt, qValue)
     {
        console.log("Error!", e)
     }
-    finally()
+    finally
     {
        await client.end()
        console.log("Client disconnected successfully.")
     }
 }
-PQ_Query(queryTxt, ["1"]);
+
+
+
+//PG_Query(queryTxt, ["51"]); /* fetch */
+PG_Query(queryTxt, ['', null, '', '', 'test123456', 'UTC', null, 212, 0, false, 51]); /* insert */
+
 
 
 /* Not used */
