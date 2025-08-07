@@ -93,3 +93,15 @@ mexes@mexes:~$ /usr/local/bin/ping "-vc 4" www.g.com
 
 /usr/local/bin/ping "-vc 7" www..co
 /usr/local/bin/ping: unknown host
+
+
+
+/usr/local/bin/ping  f www.google.com -vc 4 
+/usr/local/bin/ping: unknown host
+mexes@mexes:~/Documents/web_development/network/04_js__postgres$ /usr/local/bin/ping - f www.google.com -vc 4 
+/usr/local/bin/ping: unknown host
+mexes@mexes:~/Documents/web_development/network/04_js__postgres$ /usr/local/bin/ping -d f www.google.com -vc 4 
+/usr/local/bin/ping: unknown host
+mexes@mexes:~/Documents/web_development/network/04_js__postgres$ /usr/local/bin/ping -2 www.google.com -vc 4 
+/usr/local/bin/ping: invalid option -- '2'
+Try 'ping --help' or 'ping --usage' for more information.
